@@ -122,3 +122,4 @@ while (okButtonCoords == None):
 pyautogui.leftClick(okButtonCoords[0], okButtonCoords[1])
 
 print('Done resetting sound format.')
+input('Press Enter to continue...')
