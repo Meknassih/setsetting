@@ -2,8 +2,7 @@ import pyautogui
 import sys
 import time
 
-sysTrayIconCoords = {'x': 21, 'y': 931}
-soundsMenuCoords = {'x': 161, 'y': 880}
+soundsContextMenuOffset = {'x': 40, 'y': -48}
 dvdQualityOffset = {'x': 0, 'y': 30}
 studioQualityOffset = {'x': 0, 'y': 44}
 okWarningCoords = {'x': 1051, 'y': 623}
@@ -12,8 +11,20 @@ okPlaybackCoords = {'x': 365, 'y': 540}
 ACTION_TIME_SEC = .8
 
 # Open Sounds panel
-pyautogui.rightClick(sysTrayIconCoords['x'], sysTrayIconCoords['y'])
-pyautogui.leftClick(soundsMenuCoords['x'], soundsMenuCoords['y'])
+sysTrayIconCoords = pyautogui.locateCenterOnScreen('sound_panel_1.png')
+sysTrayIconCoords = sysTrayIconCoords or pyautogui.locateCenterOnScreen(
+    'sound_panel_2.png')
+sysTrayIconCoords = sysTrayIconCoords or pyautogui.locateCenterOnScreen(
+    'sound_panel_3.png')
+while (sysTrayIconCoords == None):
+    sysTrayIconCoords = pyautogui.locateCenterOnScreen('sound_panel_1.png')
+    sysTrayIconCoords = sysTrayIconCoords or pyautogui.locateCenterOnScreen(
+        'sound_panel_2.png')
+    sysTrayIconCoords = sysTrayIconCoords or pyautogui.locateCenterOnScreen(
+        'sound_panel_3.png')
+pyautogui.rightClick(sysTrayIconCoords[0], sysTrayIconCoords[1])
+pyautogui.moveRel(soundsContextMenuOffset['x'], soundsContextMenuOffset['y'])
+pyautogui.leftClick()
 
 # Go to Playback devices tab
 playbackTabCoords = pyautogui.locateCenterOnScreen('playback_tab.png')
@@ -87,6 +98,7 @@ else:
 
 # Stop the audio test
 # stopButtonCoords = pyautogui.locateCenterOnScreen('stop_button.png')
+time.sleep(ACTION_TIME_SEC/4)
 pyautogui.leftClick(testButtonCoords[0], testButtonCoords[1])
 
 # DEBUG
